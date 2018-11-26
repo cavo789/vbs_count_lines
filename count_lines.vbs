@@ -132,44 +132,75 @@ Class clsFolders
 
 End Class
 
-Dim cFolders, cHelper
-Dim objFSO, objDict, objKey
-Dim sFolderName, sFileName
-Dim wCount, wTotal
+Sub ShowHelp()
 
-	Set cHelper = New clsHelper
-	Call cHelper.ForceCScriptExecution()
-	Set cHelper = Nothing
-
-	Set objFSO = CreateObject("Scripting.FileSystemObject")
-
-	Set cFolders = New clsFolders
-
-	sFolderName = cFolders.getCurrentFolder()
-
-	Set objDict = cFolders.countLines(sFolderName, "txt")
-
-	wTotal = 0
-
-	wScript.echo "| Filename | Count |" & vbCrLf & "| --- | --- |"
-
-	For Each objKey In objDict
-
-		sFileName = objKey
-
-		wCount = objDict(objKey)
-
-		' The last line is an empty one, don't count it
-		wCount = wCount - 1
-
-		' Add and calculate a total
-		wTotal = wTotal + wCount
-
-		wScript.echo "| " & sFileName & " | " & FormatNumber(wCount, 0) & " |"
-
-	Next
-
+	wScript.echo " ==============="
+	wScript.echo " = Count_Lines ="
+	wScript.echo " ==============="
+	wScript.echo ""
+	wScript.echo " Please specify the name of the folder to scan; f.i. : "
+	wScript.echo " " & wScript.ScriptName & " 'C:\Temp\FolderName'"
+	wScript.echo ""
+	wScript.echo "To get more info, please read https://github.com/cavo789/vbs_count_lines"
 	wScript.echo ""
 
-	Set cFolders = Nothing
-	Set objFSO = Nothing
+	wScript.quit
+
+End sub
+
+Dim cFolders, cHelper
+Dim objFSO, objDict, objKey
+Dim sFolderName, sFileName, sExtension
+Dim wCount, wTotal
+
+	' Get the first argument (f.i. "C:\Temp\db1.accdb")
+	If (wScript.Arguments.Count < 2) Then
+
+		Call ShowHelp
+
+	Else
+
+		' Get the path specified on the command line, folder to scan
+		sFolderName = Wscript.Arguments.Item(0)
+		
+		' and the extension to scan
+		sExtension = Wscript.Arguments.Item(1)
+
+		Set cHelper = New clsHelper
+		Call cHelper.ForceCScriptExecution()
+		Set cHelper = Nothing
+
+		Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+		Set cFolders = New clsFolders
+
+		Set objDict = cFolders.countLines(sFolderName, sExtension)
+
+		wTotal = 0
+
+		wScript.echo "| Filename | Count |" & vbCrLf & "| --- | --- |"
+
+		For Each objKey In objDict
+
+			sFileName = objKey
+
+			wCount = objDict(objKey)
+
+			' The last line is an empty one, don't count it
+			wCount = wCount - 1
+
+			' Add and calculate a total
+			wTotal = wTotal + wCount
+
+			wScript.echo "| " & sFileName & " | " & FormatNumber(wCount, 0) & " |"
+
+		Next
+
+		wScript.echo "| TOTAL | " & FormatNumber(wTotal, 0) & " |"
+
+		wScript.echo ""
+
+		Set cFolders = Nothing
+		Set objFSO = Nothing
+
+	End if
