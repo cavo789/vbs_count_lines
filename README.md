@@ -1,3 +1,5 @@
+![Banner](images/banner.jpg)
+
 # Count the number of lines
 
 > Scan a folder, open every files based on a given extension, count the number of lines and display a summary
