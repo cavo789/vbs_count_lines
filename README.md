@@ -6,11 +6,14 @@
 
 ## Table of Contents
 
-- [Description](#description)
-- [Install](#install)
-- [Usage](#usage)
-- [Author](#author)
-- [License](#license)
+* [Description](#description)
+* [Install](#install)
+* [Basic usage](#basic-usage)
+  * [More in detail](#more-in-detail)
+* [Output](#output)
+* [Author](#author)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## Description
 
@@ -26,15 +29,37 @@ Just modify it to fit your need.
 
 Just get a copy of the `count_lines.vbs` script, save it on a folder on your disk / network drive.
 
-## Usage
+## Basic usage
 
 From a DOS prompt, run the script with two parameters, for instance:
 
 ```
-cscript.exe count_lines.vbs c:\temp txt
+cscript.exe count_lines.vbs -i=c:\temp -e=txt
 ```
 
-where `c:\temp\` is the folder to scan and `txt` the extension of files to scan.
+where `c:\temp\` is the input folder to scan and `txt` the extension of files to scan.
+
+### More in detail
+
+```
+===============
+= Count_Lines =
+===============
+
+Scan a folder and count the number of text lines in files.
+
+Usage: count_lines.vbs -i=input_folder -e=csv;txt
+
+-i=xxx    Name of the folder to scan (or just a '.' for the current folder)
+-e=xxx    One or more extensions (f.i. 'txt' or 'csv;txt;xml')
+
+/?        Show this help screen (or /help)
+
+Examples:
+    cscript count_lines.vbs -i=. -e=csv
+    cscript count_lines.vbs -i=. -e=csv;txt;xml
+    cscript count_lines.vbs -i=C:\Data\ -e=csvs
+```
 
 ## Output
 
